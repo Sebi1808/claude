@@ -1,0 +1,95 @@
+import { Criterion } from '@/types'
+
+export const defaultCriteria: Criterion[] = [
+  // Text-Kriterien
+  {
+    id: 'text-length',
+    name: 'Textlänge',
+    description: 'Optimal: 100-280 Zeichen für Social Media',
+    category: 'text',
+    enabled: true,
+    weight: 8,
+  },
+  {
+    id: 'text-hashtags',
+    name: 'Hashtags',
+    description: 'Empfohlen: 2-5 relevante Hashtags',
+    category: 'text',
+    enabled: true,
+    weight: 6,
+  },
+  {
+    id: 'text-emoji',
+    name: 'Emoji-Verwendung',
+    description: 'Moderate Verwendung von Emojis (1-3)',
+    category: 'text',
+    enabled: true,
+    weight: 5,
+  },
+  {
+    id: 'text-readability',
+    name: 'Lesbarkeit',
+    description: 'Klare, verständliche Sprache ohne Rechtschreibfehler',
+    category: 'text',
+    enabled: true,
+    weight: 9,
+  },
+  {
+    id: 'text-cta',
+    name: 'Call-to-Action',
+    description: 'Enthält eine klare Handlungsaufforderung',
+    category: 'text',
+    enabled: true,
+    weight: 7,
+  },
+  {
+    id: 'text-tone',
+    name: 'Tonalität',
+    description: 'Professionell und markenkonform',
+    category: 'text',
+    enabled: true,
+    weight: 8,
+  },
+
+  // Bild-Kriterien
+  {
+    id: 'image-quality',
+    name: 'Bildqualität',
+    description: 'Hochauflösend und scharf',
+    category: 'image',
+    enabled: true,
+    weight: 9,
+  },
+  {
+    id: 'image-branding',
+    name: 'Branding',
+    description: 'Logo oder Markenelemente sichtbar',
+    category: 'image',
+    enabled: true,
+    weight: 7,
+  },
+  {
+    id: 'image-composition',
+    name: 'Komposition',
+    description: 'Ausgewogene und ansprechende Bildkomposition',
+    category: 'image',
+    enabled: true,
+    weight: 8,
+  },
+  {
+    id: 'image-text',
+    name: 'Text im Bild',
+    description: 'Lesbar und nicht zu dominant (<20% der Bildfläche)',
+    category: 'image',
+    enabled: true,
+    weight: 6,
+  },
+  {
+    id: 'image-format',
+    name: 'Format',
+    description: 'Passend für Social Media Plattformen (1:1, 16:9, 9:16)',
+    category: 'image',
+    enabled: true,
+    weight: 7,
+  },
+]
