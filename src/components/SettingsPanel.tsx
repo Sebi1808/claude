@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Settings, Target, Building2, Sparkles, Eye, EyeOff, Check, X } from 'lucide-react'
 import { useSettingsStore, getProviderName, getModelName, getModelsForProvider, getTargetAudienceName } from '@/store/settingsStore'
 import { testAPIKey } from '@/lib/llmProvider'
+import UsageMeter from '@/components/UsageMeter'
 import type { LLMProvider, TargetAudience } from '@/types/storycheck'
 
 export default function SettingsPanel() {
@@ -236,6 +237,11 @@ export default function SettingsPanel() {
             🔒 Ihr API-Key wird nur lokal in Ihrem Browser gespeichert und niemals an externe Server gesendet.
           </p>
         </div>
+      </div>
+
+      {/* Usage Meter */}
+      <div className="mt-4">
+        <UsageMeter />
       </div>
     </div>
   )

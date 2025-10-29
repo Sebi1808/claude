@@ -47,6 +47,18 @@ export default function Home() {
     setResult(undefined)
 
     try {
+      // Check usage limits before analyzing
+      const limitsResponse = await fetch('/api/usage/check-limits')
+      const limitsData = await limitsResponse.json()
+
+      if (limitsData.usage?.limit_reached) {
+        setError(
+          `Monatslimit erreicht (${limitsData.usage.analyses_this_month}/${limitsData.usage.analyses_limit}). Bitte upgraden Sie Ihr Abonnement.`
+        )
+        setIsAnalyzing(false)
+        return
+      }
+
       const apiKey = getCurrentAPIKey()
       if (!apiKey) {
         throw new Error('API-Key nicht gefunden')

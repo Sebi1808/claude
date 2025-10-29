@@ -99,6 +99,14 @@ export const TIER_LIMITS: Record<SubscriptionTier, TierLimits> = {
   }
 }
 
+// Pricing (EUR per month) for BYOK model
+export const TIER_PRICES: Record<SubscriptionTier, number> = {
+  free: 0,
+  starter: 19,
+  professional: 49,
+  enterprise: 199
+}
+
 // ============================================
 // PRICING
 // ============================================
