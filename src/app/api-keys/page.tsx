@@ -31,6 +31,25 @@ export default function APIKeysPage() {
   const loadAPIKeys = async () => {
     try {
       setLoading(true)
+      
+      // DEMO MODE: Mock API Keys
+      const mockKeys: APIKey[] = [
+        {
+          id: '1',
+          provider: 'claude',
+          key_last_four: '****',
+          is_active: true,
+          created_at: new Date().toISOString(),
+          last_used_at: new Date().toISOString()
+        }
+      ]
+      
+      setApiKeys(mockKeys)
+      setLoading(false)
+      return
+      
+      // Original Supabase Code (auskommentiert für Demo)
+      /*
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
@@ -47,11 +66,12 @@ export default function APIKeysPage() {
       if (fetchError) throw fetchError
 
       setApiKeys(data || [])
+      */
     } catch (err: any) {
       console.error('Error loading API keys:', err)
       setError(err.message || 'Fehler beim Laden der API-Keys')
     } finally {
-      setLoading(false)
+      // setLoading(false) // Already done above in demo mode
     }
   }
 

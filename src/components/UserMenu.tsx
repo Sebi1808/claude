@@ -12,10 +12,23 @@ export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
+    // DEMO MODE: Mock Admin User
+    const mockUser = {
+      id: 'demo-admin-123',
+      email: 'admin@demo.de',
+      user_metadata: {
+        full_name: 'Admin (Demo)',
+      },
+    } as SupabaseUser
+
+    setUser(mockUser)
+
+    // Original Auth Code (auskommentiert für Demo)
+    /*
     // Get current user
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase?.auth?.getUser().then(({ data: { user } }) => {
       setUser(user)
-    })
+    }).catch(() => {})
 
     // Listen for auth changes
     const {
@@ -25,12 +38,16 @@ export default function UserMenu() {
     })
 
     return () => subscription.unsubscribe()
+    */
   }, [])
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/auth/login')
-    router.refresh()
+    // DEMO MODE: Nur Seite neu laden
+    window.location.href = '/'
+    
+    // Original: await supabase.auth.signOut()
+    // router.push('/auth/login')
+    // router.refresh()
   }
 
   if (!user) return null
@@ -95,17 +112,6 @@ export default function UserMenu() {
 
               <button
                 onClick={() => {
-                  router.push('/organization')
-                  setIsOpen(false)
-                }}
-                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-3"
-              >
-                <Building2 className="w-4 h-4" />
-                <span>Organisation</span>
-              </button>
-
-              <button
-                onClick={() => {
                   router.push('/api-keys')
                   setIsOpen(false)
                 }}
@@ -113,17 +119,6 @@ export default function UserMenu() {
               >
                 <Key className="w-4 h-4" />
                 <span>API-Keys</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  router.push('/settings')
-                  setIsOpen(false)
-                }}
-                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-3"
-              >
-                <Settings className="w-4 h-4" />
-                <span>Einstellungen</span>
               </button>
 
               <button

@@ -48,6 +48,34 @@ export default function HistoryPage() {
   const loadAnalyses = async () => {
     try {
       setLoading(true)
+      
+      // DEMO MODE: Mock Daten
+      const mockAnalyses: AnalysisRecord[] = [
+        {
+          id: '1',
+          input_text: 'Beispiel-Post: Unsere Gemeinschaft wächst jeden Tag!',
+          llm_provider: 'claude',
+          llm_model: 'claude-sonnet-4-5',
+          overall_score: 85,
+          overall_status: 'gut',
+          checks_results: {
+            summary: 'Gute Basis mit kleinen Verbesserungspotenzialen',
+            checks: []
+          },
+          created_at: new Date().toISOString(),
+          analysis_metadata: {
+            target_audience: 'oeffentlichkeit',
+            analysis_mode: 'quick'
+          }
+        }
+      ]
+      
+      setAnalyses(mockAnalyses)
+      setLoading(false)
+      return
+      
+      // Original Supabase Code (auskommentiert für Demo)
+      /*
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
@@ -65,11 +93,12 @@ export default function HistoryPage() {
       if (fetchError) throw fetchError
 
       setAnalyses(data || [])
+      */
     } catch (err: any) {
       console.error('Error loading analyses:', err)
       setError(err.message || 'Fehler beim Laden der Analysen')
     } finally {
-      setLoading(false)
+      // setLoading(false) // Already done above in demo mode
     }
   }
 

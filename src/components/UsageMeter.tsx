@@ -35,7 +35,7 @@ export default function UsageMeter() {
     }
   }
 
-  if (loading || !usage) return null
+  if (loading || !usage || !usage.usage) return null
 
   const { analyses_this_month, analyses_limit, limit_reached } = usage.usage
   const percentage =

@@ -36,6 +36,20 @@ function SubscriptionContent() {
   const loadSubscription = async () => {
     try {
       setLoading(true)
+      
+      // DEMO MODE: Mock Subscription Data
+      const mockSub: UserSubscription = {
+        subscription_tier: 'free',
+        subscription_status: 'active',
+        subscription_current_period_end: undefined
+      }
+      
+      setUserSub(mockSub)
+      setLoading(false)
+      return
+      
+      // Original Supabase Code (auskommentiert für Demo)
+      /*
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
@@ -52,11 +66,12 @@ function SubscriptionContent() {
       if (fetchError) throw fetchError
 
       setUserSub(data)
+      */
     } catch (err: any) {
       console.error('Error loading subscription:', err)
       setError(err.message || 'Fehler beim Laden des Abonnements')
     } finally {
-      setLoading(false)
+      // setLoading(false) // Already done above in demo mode
     }
   }
 

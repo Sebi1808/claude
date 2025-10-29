@@ -45,20 +45,34 @@ export default function SettingsPanel() {
     setIsTestingKey(true)
     setKeyTestResult(null)
 
-    // Get first model for provider
-    const models = getModelsForProvider(selectedProvider)
-    const testModel = models[0]
+    try {
+      // Test API key via server-side route (avoids CORS)
+      const response = await fetch('/api/test-api-key', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          provider: selectedProvider,
+          apiKey: tempApiKey
+        })
+      })
 
-    const result = await testAPIKey(selectedProvider, testModel, tempApiKey)
+      const result = await response.json()
 
-    setIsTestingKey(false)
+      setIsTestingKey(false)
 
-    if (result.valid) {
-      setAPIKey(selectedProvider, tempApiKey)
-      setKeyTestResult({ valid: true, message: 'API-Key gespeichert und getestet ✓' })
-      setTimeout(() => setKeyTestResult(null), 3000)
-    } else {
-      setKeyTestResult({ valid: false, message: `Fehler: ${result.error}` })
+      if (result.valid) {
+        setAPIKey(selectedProvider, tempApiKey)
+        setKeyTestResult({ valid: true, message: 'API-Key gespeichert und getestet ✓' })
+        setTimeout(() => setKeyTestResult(null), 3000)
+      } else {
+        setKeyTestResult({ valid: false, message: `Fehler: ${result.error || 'Ungültiger Key'}` })
+      }
+    } catch (error) {
+      setIsTestingKey(false)
+      setKeyTestResult({ 
+        valid: false, 
+        message: `Netzwerkfehler: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}` 
+      })
     }
   }
 

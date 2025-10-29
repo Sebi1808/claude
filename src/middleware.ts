@@ -4,7 +4,27 @@ import type { NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
+  
+  // DEMO MODE: Komplett deaktiviert für Testing ohne Auth
+  // Alle Routes sind frei zugänglich
+  return res
+
+  // Original Auth-Code (auskommentiert für Demo)
+  /*
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  // Fallback: In Dev nicht crashen, wenn Env fehlt
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return res
+  }
+
+  const supabase = createMiddlewareClient({
+    req,
+    res,
+    supabaseUrl,
+    supabaseKey: supabaseAnonKey,
+  })
 
   const {
     data: { session },
@@ -26,17 +46,12 @@ export async function middleware(req: NextRequest) {
   }
 
   return res
+  */
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files
-     */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    // Temporarily disabled to debug
+    // '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

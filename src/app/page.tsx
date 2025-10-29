@@ -70,20 +70,29 @@ export default function Home() {
           ? selectedChecks
           : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
-      const analysisResult = await analyzeContent(
-        {
+      // Call analysis API (server-side to avoid CORS)
+      const analyzeResponse = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           text,
           image,
           targetAudience,
           organizationSettings,
           selectedChecks: checksToRun,
-          analysisMode: mode
-        },
-        selectedProvider,
-        selectedModel,
-        apiKey
-      )
+          analysisMode: mode,
+          provider: selectedProvider,
+          model: selectedModel,
+          apiKey
+        })
+      })
 
+      if (!analyzeResponse.ok) {
+        const errorData = await analyzeResponse.json()
+        throw new Error(errorData.error || 'Analyse fehlgeschlagen')
+      }
+
+      const analysisResult = await analyzeResponse.json()
       setResult(analysisResult)
 
       // Save analysis to database

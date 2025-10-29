@@ -9,6 +9,35 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    // DEMO MODE: Always return demo data (Supabase not configured)
+    return NextResponse.json({
+      tier: 'free',
+      usage: {
+        analyses_this_month: 0,
+        analyses_limit: 10,
+        limit_reached: false,
+      },
+      subscription_active: false,
+    })
+
+    // Original Supabase Code (auskommentiert für Demo)
+    /*
+    // Fallback: Return demo data if Supabase not configured
+    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('example')) {
+      return NextResponse.json({
+        tier: 'free',
+        usage: {
+          analyses_this_month: 0,
+          analyses_limit: 10,
+          limit_reached: false,
+        },
+        subscription_active: false,
+      })
+    }
+
     const supabase = createRouteHandlerClient<Database>({ cookies })
 
     const {
@@ -19,7 +48,9 @@ export async function GET(request: NextRequest) {
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    */
 
+    /*
     // Get user's subscription tier
     const { data: userData, error: userError } = await supabase
       .from('users')
@@ -71,6 +102,7 @@ export async function GET(request: NextRequest) {
       },
       subscription_active: userData.subscription_status === 'active',
     })
+    */
   } catch (error: any) {
     console.error('Check limits error:', error)
     return NextResponse.json(

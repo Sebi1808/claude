@@ -3,11 +3,15 @@ import type { LLMProvider } from '@/types/storycheck'
 
 export async function POST(request: NextRequest) {
   try {
-    const { provider, apiKey } = await request.json()
+    const body = await request.json().catch(() => ({}))
+    const { provider, apiKey } = body
 
     if (!provider || !apiKey) {
       return NextResponse.json(
-        { error: 'Provider und API-Key sind erforderlich' },
+        { 
+          valid: false,
+          error: 'Provider und API-Key sind erforderlich' 
+        },
         { status: 400 }
       )
     }
@@ -19,7 +23,10 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('API key test error:', error)
     return NextResponse.json(
-      { error: error.message || 'Fehler beim Testen des API-Keys' },
+      { 
+        valid: false,
+        error: error.message || 'Fehler beim Testen des API-Keys' 
+      },
       { status: 500 }
     )
   }
