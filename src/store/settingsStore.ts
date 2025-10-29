@@ -59,9 +59,9 @@ const defaultOrganizationSettings: OrganizationSettings = {
 
 // Default model for each provider
 const defaultModels: Record<LLMProvider, LLMModel> = {
-  claude: 'claude-3-5-sonnet-20241022',
-  openai: 'gpt-4o',
-  gemini: 'gemini-1.5-pro'
+  claude: 'claude-sonnet-4-5',
+  openai: 'gpt-5',
+  gemini: 'gemini-2.5-pro'
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -70,7 +70,7 @@ export const useSettingsStore = create<SettingsStore>()(
       // Initial State
       apiKeys: {},
       selectedProvider: 'claude',
-      selectedModel: 'claude-3-5-sonnet-20241022',
+      selectedModel: 'claude-sonnet-4-5',
 
       targetAudience: 'oeffentlichkeit',
       customTargetAudience: '',
@@ -146,7 +146,7 @@ export const useSettingsStore = create<SettingsStore>()(
         set({
           apiKeys: {},
           selectedProvider: 'claude',
-          selectedModel: 'claude-3-5-sonnet-20241022',
+          selectedModel: 'claude-sonnet-4-5',
           targetAudience: 'oeffentlichkeit',
           customTargetAudience: '',
           organizationSettings: defaultOrganizationSettings,
@@ -192,15 +192,14 @@ export function getProviderName(provider: LLMProvider): string {
  */
 export function getModelName(model: LLMModel): string {
   const names: Record<string, string> = {
-    'claude-3-5-sonnet-20241022': 'Claude 3.5 Sonnet',
-    'claude-3-5-haiku-20241022': 'Claude 3.5 Haiku',
-    'claude-3-opus-4-20250514': 'Claude 3 Opus 4',
-    'gpt-4o': 'GPT-4o',
-    'gpt-4o-mini': 'GPT-4o Mini',
-    'gpt-4-turbo': 'GPT-4 Turbo',
-    'gemini-2.0-flash-exp': 'Gemini 2.0 Flash (Experimental)',
-    'gemini-1.5-pro': 'Gemini 1.5 Pro',
-    'gemini-1.5-flash': 'Gemini 1.5 Flash'
+    'claude-sonnet-4-5': 'Claude Sonnet 4.5',
+    'claude-haiku-4-5': 'Claude Haiku 4.5',
+    'claude-opus-4': 'Claude Opus 4',
+    'gpt-5': 'GPT-5',
+    'gpt-5-mini': 'GPT-5 Mini',
+    'gpt-5-turbo': 'GPT-5 Turbo',
+    'gemini-2.5-pro': 'Gemini 2.5 Pro',
+    'gemini-2.5-flash': 'Gemini 2.5 Flash'
   }
   return names[model] || model
 }
@@ -211,19 +210,18 @@ export function getModelName(model: LLMModel): string {
 export function getModelsForProvider(provider: LLMProvider): LLMModel[] {
   const models: Record<LLMProvider, LLMModel[]> = {
     claude: [
-      'claude-3-5-sonnet-20241022',
-      'claude-3-5-haiku-20241022',
-      'claude-3-opus-4-20250514'
+      'claude-sonnet-4-5',
+      'claude-haiku-4-5',
+      'claude-opus-4'
     ],
     openai: [
-      'gpt-4o',
-      'gpt-4o-mini',
-      'gpt-4-turbo'
+      'gpt-5',
+      'gpt-5-mini',
+      'gpt-5-turbo'
     ],
     gemini: [
-      'gemini-1.5-pro',
-      'gemini-1.5-flash',
-      'gemini-2.0-flash-exp'
+      'gemini-2.5-pro',
+      'gemini-2.5-flash'
     ]
   }
   return models[provider]

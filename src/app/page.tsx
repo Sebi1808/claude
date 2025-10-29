@@ -6,7 +6,7 @@ import TextEditor from '@/components/TextEditor'
 import ImageUpload from '@/components/ImageUpload'
 import SettingsPanel from '@/components/SettingsPanel'
 import AnalysisDashboard from '@/components/AnalysisDashboard'
-import WelcomeModal from '@/components/WelcomeModal'
+import UserMenu from '@/components/UserMenu'
 import { useSettingsStore } from '@/store/settingsStore'
 import { analyzeContent } from '@/lib/analysisEngine'
 import { hasCurrentProviderAPIKey, getCurrentAPIKey } from '@/store/settingsStore'
@@ -26,8 +26,7 @@ export default function Home() {
     customTargetAudience,
     organizationSettings,
     selectedChecks,
-    analysisMode,
-    showWelcome
+    analysisMode
   } = useSettingsStore()
 
   const handleAnalyze = async (mode: 'quick' | 'deep') => {
@@ -100,13 +99,16 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-xs text-gray-500">
-                Basierend auf den 14 Praxistipps
-              </p>
-              <p className="text-xs text-gray-500">
-                von Sebastian Zollner
-              </p>
+            <div className="flex items-center space-x-6">
+              <div className="text-right hidden sm:block">
+                <p className="text-xs text-gray-500">
+                  Basierend auf den 14 Praxistipps
+                </p>
+                <p className="text-xs text-gray-500">
+                  von Sebastian Zollner
+                </p>
+              </div>
+              <UserMenu />
             </div>
           </div>
         </div>
@@ -200,9 +202,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      {/* Welcome Modal */}
-      {showWelcome && <WelcomeModal />}
     </main>
   )
 }
