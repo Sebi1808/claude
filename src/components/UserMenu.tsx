@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase/client'
-import { User, LogOut, Settings, CreditCard, History, Building2 } from 'lucide-react'
+import { User, LogOut, Settings, CreditCard, History, Building2, Key } from 'lucide-react'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 
 export default function UserMenu() {
@@ -102,6 +102,17 @@ export default function UserMenu() {
               >
                 <Building2 className="w-4 h-4" />
                 <span>Organisation</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  router.push('/api-keys')
+                  setIsOpen(false)
+                }}
+                className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-3"
+              >
+                <Key className="w-4 h-4" />
+                <span>API-Keys</span>
               </button>
 
               <button
