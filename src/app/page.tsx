@@ -7,6 +7,7 @@ import ImageUpload from '@/components/ImageUpload'
 import SettingsPanel from '@/components/SettingsPanel'
 import AnalysisDashboard from '@/components/AnalysisDashboard'
 import UserMenu from '@/components/UserMenu'
+import { supabase } from '@/lib/supabase/client'
 import { useSettingsStore } from '@/store/settingsStore'
 import { analyzeContent } from '@/lib/analysisEngine'
 import { hasCurrentProviderAPIKey, getCurrentAPIKey } from '@/store/settingsStore'
@@ -72,6 +73,32 @@ export default function Home() {
       )
 
       setResult(analysisResult)
+
+      // Save analysis to database
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          await supabase.from('analyses').insert({
+            user_id: user.id,
+            input_text: text,
+            llm_provider: selectedProvider,
+            llm_model: selectedModel,
+            overall_score: analysisResult.overallScore,
+            overall_status: analysisResult.overallStatus,
+            checks_results: {
+              summary: analysisResult.summary,
+              checks: analysisResult.checks
+            },
+            analysis_metadata: {
+              target_audience: targetAudience,
+              analysis_mode: mode
+            }
+          })
+        }
+      } catch (saveError) {
+        console.error('Error saving analysis to database:', saveError)
+        // Don't fail the analysis if saving fails
+      }
     } catch (err) {
       console.error('Analysis error:', err)
       setError(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten')
